@@ -9,4 +9,4 @@ x = [150, 250, 350, 450]
 print(statistics.mean(x))
 
 # some important libraries
-# numpy, pandas
+# numpy, pandas and so on...
