@@ -67,3 +67,5 @@ sample_data_frame[0:4].sort_index(axis=1, ascending=True)
 # sample_data_frame[0:2]
 # dates
 # sample_data_frame.loc[dates[0]]
+
+# Reading docs for DataFrame
