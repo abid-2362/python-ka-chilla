@@ -38,19 +38,21 @@ for index_year, total_value in year_sum.iteritems():
 
 required_data = required_data.sort_index().reset_index(drop=True)
 
-# required_data.to_csv("../../data/rural_urban_total_population_pakistan.csv", index=False)
-# sns.lineplot(x="Year", y="Value", hue="Element", data=required_data)
-# plt.title("Pakistan Rural and Urban Population 1990-2018")
-# plt.xlabel("Year")
-# plt.ylabel("Population (Million)")
-# plt.show()
-
-# Draw a bar graph
-plt.figure(figsize=(20.0, 10.0))  # its important to mention figure size before generating the graph
-barplot = sns.barplot(x="Year", y="Value", hue="Element", data=required_data, orient="v")
-barplot.set_xticklabels(barplot.get_xticklabels(), rotation=90, ha="right")
+required_data.to_csv("../../data/rural_urban_total_population_pakistan.csv", index=False)
+sns.lineplot(x="Year", y="Value", hue="Element", data=required_data)
 plt.title("Pakistan Rural and Urban Population 1990-2018")
 plt.xlabel("Year")
 plt.ylabel("Population (Million)")
-plt.figtext(x=0.65, y=0.0, s="Twitter: @abidalifsd")
+plt.show()
+
+# Draw a bar graph
+plt.figure(figsize=(15.0, 10.0))  # its important to mention figure size before generating the graph
+barplot = sns.barplot(x="Year", y="Value", hue="Element", data=required_data, orient="v")
+barplot.set_xticklabels(barplot.get_xticklabels(), rotation=0, ha="center")
+barplot.set_xticks(range(len(required_data.groupby('Year'))))
+plt.tight_layout(pad=2.08)
+plt.title("Pakistan Rural and Urban Population 1990-2018")
+plt.xlabel("Year")
+plt.ylabel("Population (Million)")
+plt.figtext(x=0.65, y=0.03, s="Twitter: @abidalifsd")
 plt.show()
