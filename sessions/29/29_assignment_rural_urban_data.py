@@ -43,6 +43,7 @@ sns.lineplot(x="Year", y="Value", hue="Element", data=required_data)
 plt.title("Pakistan Rural and Urban Population 1990-2018")
 plt.xlabel("Year")
 plt.ylabel("Population (Million)")
+plt.figtext(x=0.65, y=0.02, s="Twitter: @abidalifsd")
 plt.show()
 
 # Draw a bar graph
