@@ -3,35 +3,44 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-data = pd.read_csv("../../data/FAOSTAT_data_rural_urban_population.csv")
-# required_data = data.loc[0:, ["Element", "Year", "Value"]]
 
-required_data = data[["Element", "Year", "Value"]]
-# Convert into original Values
-# required_data["Value"] = required_data["Value"].apply(lambda x: int(x * 1000))
+# Define required function to add population
+def add_total(year, total):
+    """Adds Total Population Value after each year row
 
-# Convert into Million
+        Args:
+            year: Year to add total population
+
+            total: Total population for the provided year
+
+        Returns:
+            None
+    """
+    rindex = list(required_data.loc[required_data['Year'] == year].index)[-1]
+    new_index = rindex + 0.5
+    required_data.loc[new_index] = {'Element': 'Total Population', 'Year': year, 'Value': total}
+
+
+required_columns = ["Element", "Year", "Value"]
+# load only required data
+required_data = pd.read_csv("../../data/FAOSTAT_data_rural_urban_population.csv", usecols=required_columns)
+
+# Current data is in Thousands, Convert into Million i.e. from K to M
 required_data["Value"] = required_data["Value"].apply(lambda x: int(x // 1000))
 
-# Task: Add a new data row for each year by adding rural and urban value
-# Pseudo code:
-# Read Value for year, sum the values of Value and add a new row
+year_sum = required_data.groupby(["Year"])["Value"].sum()
 
-# Task: Getting values based on group
-# for group_data in required_data.groupby(["Year"]):
-#     print(group_data)
-    # print("Total population in", x["Year"], "is: ", x)
-    # print(group_data, "\n----", group_data[0], group_data[1].iloc[1], "\n=======")
+years_list = list(year_sum.index)
 
-# for index, row in required_data.groupby(["Year"]):
-#     print(index, row)
-#     print(row["Year"], row["Value"])
+# add Total Population Value after each year in a loop
+for index_year, total_value in year_sum.iteritems():
+    add_total(index_year, total_value)
 
-sum_values = required_data.groupby(["Year"])["Value"].sum()
+required_data = required_data.sort_index().reset_index(drop=True)
 
+required_data.to_csv("../../data/rural_urban_total_population_pakistan.csv", index=False)
 sns.lineplot(x="Year", y="Value", hue="Element", data=required_data)
 plt.title("Pakistan Rural and Urban Population 1990-2018")
 plt.xlabel("Year")
 plt.ylabel("Population (Million)")
 plt.show()
-
