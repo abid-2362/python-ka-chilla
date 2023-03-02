@@ -1,0 +1,672 @@
+<html>
+<head>
+<title>10_minutes_to_pandas.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #629755; font-style: italic;}
+.s1 { color: #c8c8c8;}
+.s2 { color: #fc618d;}
+.s3 { color: #939293;}
+.s4 { color: #948ae3;}
+.s5 { color: #fce566;}
+</style>
+</head>
+<body bgcolor="#191919">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+10_minutes_to_pandas.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% md 
+</span><span class="s1"># 10 Minutes to Pandas 
+[reference](https://pandas.pydata.org/docs/user_guide/10min.html) 
+https://pandas.pydata.org/docs/user_guide/10min.html 
+ 
+fiverr.com/abd_soft 
+ 
+</span><span class="s0">#%% md 
+</span><span class="s1">## Object creation 
+ 
+</span><span class="s0">#%% 
+</span><span class="s2">import </span><span class="s1">pandas </span><span class="s2">as </span><span class="s1">pd</span>
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+
+<span class="s1">arr1 </span><span class="s2">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">array</span><span class="s3">([</span><span class="s4">1</span><span class="s3">,</span><span class="s4">2</span><span class="s3">,</span><span class="s4">3</span><span class="s3">,</span><span class="s4">4</span><span class="s3">,</span><span class="s4">5</span><span class="s3">,</span><span class="s4">6</span><span class="s3">])</span>
+<span class="s1">s </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">(</span><span class="s1">arr1</span><span class="s3">)</span>
+<span class="s1">s</span>
+
+<span class="s0">#%% 
+# Creating a DataFrame by passing a NumPy array, with a datetime index using date_range() and labeled columns:</span>
+<span class="s1">dates </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">date_range</span><span class="s3">(</span><span class="s5">&quot;20230101&quot;</span><span class="s3">, </span><span class="s1">periods</span><span class="s2">=</span><span class="s4">30</span><span class="s3">)</span>
+<span class="s1">dates</span>
+<span class="s0">#%% 
+</span><span class="s1">arr </span><span class="s2">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s4">121</span><span class="s3">)</span>
+<span class="s1">arr_2d </span><span class="s2">= </span><span class="s1">arr</span><span class="s3">.</span><span class="s1">reshape</span><span class="s3">(</span><span class="s4">30</span><span class="s3">,</span><span class="s4">4</span><span class="s3">)</span>
+<span class="s1">arr_2d</span>
+<span class="s0">#%% 
+# df = pd.DataFrame(np.random.randn(30,4), index=dates, columns=list(&quot;ABCD&quot;))</span>
+<span class="s1">arr </span><span class="s2">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s4">120</span><span class="s3">)</span>
+<span class="s1">len</span><span class="s3">(</span><span class="s1">arr</span><span class="s3">)</span>
+<span class="s1">df </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span><span class="s1">arr_2d</span><span class="s3">, </span><span class="s1">index</span><span class="s2">=</span><span class="s1">dates</span><span class="s3">, </span><span class="s1">columns</span><span class="s2">=</span><span class="s1">list</span><span class="s3">(</span><span class="s5">&quot;ABCD&quot;</span><span class="s3">))</span>
+<span class="s1">original_data </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+# Creating a DataFrame by passing a dictionary of objects that can be converted into a series-like structure:</span>
+<span class="s1">df2 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;A&quot;</span><span class="s2">: </span><span class="s4">1.0</span><span class="s3">,</span>
+        <span class="s5">&quot;B&quot;</span><span class="s2">: </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Timestamp</span><span class="s3">(</span><span class="s5">&quot;20130102&quot;</span><span class="s3">),</span>
+        <span class="s5">&quot;C&quot;</span><span class="s2">: </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s1">index</span><span class="s2">=</span><span class="s1">list</span><span class="s3">(</span><span class="s1">range</span><span class="s3">(</span><span class="s4">4</span><span class="s3">)), </span><span class="s1">dtype</span><span class="s2">=</span><span class="s5">&quot;float32&quot;</span><span class="s3">),</span>
+        <span class="s5">&quot;D&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">array</span><span class="s3">([</span><span class="s4">3</span><span class="s3">] </span><span class="s2">* </span><span class="s4">4</span><span class="s3">, </span><span class="s1">dtype</span><span class="s2">=</span><span class="s5">&quot;int32&quot;</span><span class="s3">),</span>
+        <span class="s5">&quot;E&quot;</span><span class="s2">: </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Categorical</span><span class="s3">([</span><span class="s5">&quot;test&quot;</span><span class="s3">, </span><span class="s5">&quot;train&quot;</span><span class="s3">, </span><span class="s5">&quot;test&quot;</span><span class="s3">, </span><span class="s5">&quot;train&quot;</span><span class="s3">]),</span>
+        <span class="s5">&quot;F&quot;</span><span class="s2">: </span><span class="s5">&quot;foo&quot;</span><span class="s3">,</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">df2</span>
+
+<span class="s0">#%% 
+# testing what are the outputs of the given inputs in above df2</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s1">index</span><span class="s2">=</span><span class="s1">list</span><span class="s3">(</span><span class="s1">range</span><span class="s3">(</span><span class="s4">4</span><span class="s3">)), </span><span class="s1">dtype</span><span class="s2">=</span><span class="s5">&quot;float32&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">np</span><span class="s3">.</span><span class="s1">array</span><span class="s3">([</span><span class="s4">3</span><span class="s3">] </span><span class="s2">* </span><span class="s4">4</span><span class="s3">, </span><span class="s1">dtype</span><span class="s2">=</span><span class="s5">&quot;int32&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Categorical</span><span class="s3">([</span><span class="s5">&quot;test&quot;</span><span class="s3">, </span><span class="s5">&quot;train&quot;</span><span class="s3">, </span><span class="s5">&quot;test&quot;</span><span class="s3">, </span><span class="s5">&quot;train&quot;</span><span class="s3">])</span>
+
+<span class="s0">#%% 
+# now we have a new dataframe df2 from a dictionary</span>
+<span class="s1">df2</span>
+
+<span class="s0">#%% 
+# The columns of the resulting DataFrame have different dtypes:</span>
+<span class="s1">df2</span><span class="s3">.</span><span class="s1">dtypes</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df2</span><span class="s3">.</span><span class="s1">A</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Viewing data 
+ 
+</span><span class="s0">#%% 
+# Use DataFrame.head() and DataFrame.tail() to view the top and bottom rows of the frame respectively:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">head</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">tail</span><span class="s3">(</span><span class="s4">3</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+# Display the DataFrame.index or DataFrame.columns:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">index</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns </span><span class="s2">= </span><span class="s1">list</span><span class="s3">(</span><span class="s5">&quot;EFGH&quot;</span><span class="s3">)</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns </span><span class="s2">= </span><span class="s1">list</span><span class="s3">(</span><span class="s5">&quot;ABCD&quot;</span><span class="s3">)</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+# DataFrame.to_numpy() gives a NumPy representation of the underlying data. Note that this can be an expensive operation when your DataFrame has columns with different data types, which comes down to a fundamental difference between pandas and NumPy: NumPy arrays have one dtype for the entire array, while pandas DataFrames have one dtype per column. When you call DataFrame.to_numpy(), pandas will find the NumPy dtype that can hold all of the dtypes in the DataFrame. This may end up being object, which requires casting every value to a Python object.</span>
+
+<span class="s0"># For df, our DataFrame of all floating-point values, and DataFrame.to_numpy() is fast and doesn’t require copying data:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">to_numpy</span><span class="s3">()</span>
+<span class="s0">#%% 
+# For df2, the DataFrame with multiple dtypes, DataFrame.to_numpy() is relatively expensive:</span>
+<span class="s1">np_data </span><span class="s2">= </span><span class="s1">df2</span><span class="s3">.</span><span class="s1">to_numpy</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">np_data</span><span class="s3">.</span><span class="s1">dtype</span>
+
+<span class="s0">#%% 
+</span><span class="s1">type</span><span class="s3">(</span><span class="s1">np_data</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+# DataFrame.to_numpy() does not include the index or column labels in the output.</span>
+<span class="s1">np_data</span>
+<span class="s0">#%% 
+# describe() shows a quick statistic summary of your data:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">describe</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+# Transposing your data: i.e. rows become columns and columns become rows.</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">T</span>
+<span class="s0">#%% 
+# DataFrame.sort_index() sorts by an axis:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">sort_index</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">sort_index</span><span class="s3">(</span><span class="s1">ascending</span><span class="s2">=False</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">sort_index</span><span class="s3">(</span><span class="s1">axis</span><span class="s2">=</span><span class="s4">1</span><span class="s3">, </span><span class="s1">ascending</span><span class="s2">=False</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">sort_index</span><span class="s3">(</span><span class="s1">axis</span><span class="s2">=</span><span class="s4">0</span><span class="s3">, </span><span class="s1">ascending</span><span class="s2">=False</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+# DataFrame.sort_values() sorts by values:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">sort_values</span><span class="s3">(</span><span class="s1">by</span><span class="s2">=</span><span class="s5">&quot;B&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">sort_values</span><span class="s3">(</span><span class="s1">by</span><span class="s2">=</span><span class="s5">&quot;B&quot;</span><span class="s3">, </span><span class="s1">ascending</span><span class="s2">=False</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Getting 
+&lt;span style=&quot;color:red&quot;&gt;&lt;b&gt;Note&lt;/b&gt;&lt;/span&gt; 
+ 
+While standard Python / NumPy expressions for selecting and setting are intuitive and come in handy for interactive work, for production code, we recommend the optimized pandas data access methods, `DataFrame.at()`, `DataFrame.iat()`, `DataFrame.loc()` and `DataFrame.iloc()`. 
+</span><span class="s0">#%% 
+# Selecting a single column, which yields a Series, equivalent to df.A:</span>
+<span class="s1">df</span><span class="s3">[</span><span class="s5">&quot;A&quot;</span><span class="s3">]</span>
+<span class="s0">#%% 
+# Selecting via [] (__getitem__), which slices the rows:</span>
+<span class="s1">df</span><span class="s3">[</span><span class="s4">0</span><span class="s2">:</span><span class="s4">3</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">[</span><span class="s5">&quot;20230101&quot;</span><span class="s2">: </span><span class="s5">&quot;20230105&quot;</span><span class="s3">]</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Selection by label 
+See more in Selection by Label using `DataFrame.loc()` or `DataFrame.at()`. 
+ 
+</span><span class="s0">#%% 
+# For getting a cross section using a label:</span>
+<span class="s0"># dates[0]</span>
+<span class="s0"># df.loc[&quot;20230101&quot;]</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">]]</span>
+
+<span class="s0">#%% 
+# Selecting on a multi-axis by label:</span>
+<span class="s0"># these are all valid examples of selection</span>
+
+<span class="s0"># df.loc[&quot;20230101&quot;:&quot;20230105&quot;, [&quot;A&quot;, &quot;B&quot;]]</span>
+<span class="s0"># df.loc[&quot;20230101&quot;:&quot;20230105&quot;, list(&quot;AB&quot;)]</span>
+<span class="s0"># df.loc[&quot;20230101&quot;:&quot;20230105&quot;, list(&quot;AC&quot;)]</span>
+<span class="s0"># df.loc[dates[0:], list(&quot;CD&quot;)]</span>
+<span class="s0"># df.loc[dates[0:len(dates)], list(&quot;CD&quot;)]</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">3</span><span class="s2">:</span><span class="s4">5</span><span class="s3">], </span><span class="s1">list</span><span class="s3">(</span><span class="s5">&quot;CD&quot;</span><span class="s3">)]</span>
+<span class="s0">#%% 
+# Showing label slicing, both endpoints are included:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">&quot;20230102&quot;</span><span class="s2">:</span><span class="s5">&quot;20230104&quot;</span><span class="s3">, [</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">]]</span>
+
+<span class="s0">#%% 
+# Reduction in the dimensions of the returned object:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">&quot;20230102&quot;</span><span class="s3">, [</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">]]</span>
+
+<span class="s0">#%% 
+# KeyError when entry is not available</span>
+<span class="s0"># df.loc[&quot;20130102&quot;, [&quot;A&quot;, &quot;B&quot;]]</span>
+
+<span class="s0">#%% 
+</span><span class="s1">returned_val </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">], </span><span class="s1">list</span><span class="s3">(</span><span class="s5">&quot;D&quot;</span><span class="s3">)]</span>
+<span class="s1">type</span><span class="s3">(</span><span class="s1">returned_val</span><span class="s3">)</span>
+<span class="s0">#%% 
+# For getting a scalar value:</span>
+<span class="s1">returned_val2 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">], </span><span class="s5">&quot;D&quot;</span><span class="s3">]</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">returned_val2</span><span class="s3">)</span>
+<span class="s1">type</span><span class="s3">(</span><span class="s1">returned_val2</span><span class="s3">)</span>
+<span class="s0">#%% 
+# For getting fast access to a scalar (equivalent to the prior method):</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">at</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">], </span><span class="s5">&quot;D&quot;</span><span class="s3">]</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Selection by position 
+See more in Selection by Position using `DataFrame.iloc()` or `DataFrame.at()`. 
+ 
+</span><span class="s0">#%% 
+# Select via the position of the passed integers:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">0</span><span class="s3">]</span>
+<span class="s0">#%% 
+# By integer slices, acting similar to NumPy/Python:</span>
+
+<span class="s0"># df.iloc[0:5, 0:]</span>
+<span class="s0"># df.iloc[0:5, 0:2]</span>
+<span class="s0"># df.iloc[28:, :]</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">28</span><span class="s2">:</span><span class="s3">, </span><span class="s2">:</span><span class="s3">]</span>
+<span class="s0">#%% 
+# By lists of integer position locations, similar to the NumPy/Python style:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[[</span><span class="s4">1</span><span class="s3">,</span><span class="s4">6</span><span class="s3">], [</span><span class="s4">0</span><span class="s3">,</span><span class="s4">3</span><span class="s3">]]</span>
+
+<span class="s0">#%% 
+# For slicing rows explicitly:</span>
+<span class="s0">#  e.g. defining the rows explicitly to slice from the range</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">1</span><span class="s2">:</span><span class="s4">3</span><span class="s3">, </span><span class="s2">:</span><span class="s3">]</span>
+<span class="s0">#%% 
+# For slicing columns explicitly</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s2">:</span><span class="s3">, </span><span class="s4">1</span><span class="s2">:</span><span class="s4">3</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+# For slicing rows and columns explicitly</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">1</span><span class="s2">:</span><span class="s4">3</span><span class="s3">, </span><span class="s4">1</span><span class="s2">:</span><span class="s4">3</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+# For getting a value explicitly:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">3</span><span class="s3">,</span><span class="s4">2</span><span class="s3">]</span>
+<span class="s0">#%% 
+# For getting fast access to a scalar (equivalent to the prior method):</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iat</span><span class="s3">[</span><span class="s4">3</span><span class="s3">,</span><span class="s4">2</span><span class="s3">]</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Boolean indexing 
+ 
+</span><span class="s0">#%% 
+# Using a single column’s values to select data:</span>
+<span class="s0"># df[df[&quot;A&quot;]&gt;10 &amp; df[&quot;A&quot;] &lt; 20] - Not working, need to check how to use multiple conditions?</span>
+<span class="s1">df</span><span class="s3">[</span><span class="s1">df</span><span class="s3">[</span><span class="s5">&quot;A&quot;</span><span class="s3">]</span><span class="s2">&gt;</span><span class="s4">10</span><span class="s3">]</span>
+<span class="s0"># df[df[&quot;A&quot;]&gt;10].sort_values(by=&quot;D&quot;, ascending=True)</span>
+<span class="s0">#%% 
+# Selecting values from a DataFrame where a boolean condition is met:</span>
+<span class="s1">df</span><span class="s3">[</span><span class="s1">df </span><span class="s2">&gt; </span><span class="s4">10</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+# Using the isin() method for filtering:</span>
+
+<span class="s0"># copy the data frame into new variable</span>
+<span class="s1">df3 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+<span class="s0"># creating_list</span>
+<span class="s1">l </span><span class="s2">= </span><span class="s3">[</span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;three&quot;</span><span class="s3">, </span><span class="s5">&quot;four&quot;</span><span class="s3">, </span><span class="s5">&quot;five&quot;</span><span class="s3">] </span><span class="s2">* </span><span class="s4">6</span>
+
+<span class="s0"># creating a new column</span>
+<span class="s1">df3</span><span class="s3">[</span><span class="s5">&quot;E&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s1">l</span>
+
+<span class="s0"># df3[df3[&quot;E&quot;].isin([&quot;two&quot;])]</span>
+<span class="s1">df3</span><span class="s3">[</span><span class="s1">df3</span><span class="s3">[</span><span class="s5">&quot;E&quot;</span><span class="s3">].</span><span class="s1">isin</span><span class="s3">([</span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;four&quot;</span><span class="s3">])]</span>
+<span class="s0">#%% 
+</span><span class="s1">df3</span><span class="s3">[</span><span class="s5">&quot;E&quot;</span><span class="s3">].</span><span class="s1">isin</span><span class="s3">([</span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;four&quot;</span><span class="s3">])</span>
+
+<span class="s0">#%% md 
+</span><span class="s1"># Setting Data 
+ 
+</span><span class="s0">#%% 
+# Setting a new column automatically aligns the data by the indexes:</span>
+<span class="s1">s1 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">([</span><span class="s4">1</span><span class="s3">, </span><span class="s4">2</span><span class="s3">, </span><span class="s4">3</span><span class="s3">, </span><span class="s4">4</span><span class="s3">, </span><span class="s4">5</span><span class="s3">, </span><span class="s4">6</span><span class="s3">], </span><span class="s1">index</span><span class="s2">=</span><span class="s1">pd</span><span class="s3">.</span><span class="s1">date_range</span><span class="s3">(</span><span class="s5">&quot;20130102&quot;</span><span class="s3">, </span><span class="s1">periods</span><span class="s2">=</span><span class="s4">6</span><span class="s3">))</span>
+<span class="s1">s1</span>
+<span class="s0">#%% 
+# Setting values by label:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">at</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">], </span><span class="s5">&quot;A&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s4">1</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+# Setting values by position:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">iat</span><span class="s3">[</span><span class="s4">0</span><span class="s3">,</span><span class="s4">0</span><span class="s3">] </span><span class="s2">= </span><span class="s4">1</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s2">:</span><span class="s3">, </span><span class="s5">&quot;D&quot;</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s2">:</span><span class="s3">, </span><span class="s5">&quot;E&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">array</span><span class="s3">([</span><span class="s4">5</span><span class="s3">] </span><span class="s2">* </span><span class="s1">len</span><span class="s3">(</span><span class="s1">df</span><span class="s3">))</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">], </span><span class="s5">&quot;E&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s4">4</span>
+<span class="s1">df</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">describe</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">desc </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">describe</span><span class="s3">()</span>
+<span class="s1">desc</span>
+<span class="s0">#%% 
+</span><span class="s1">desc</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">&quot;mean&quot;</span><span class="s3">, </span><span class="s5">&quot;A&quot;</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+# df.loc[&quot;mean&quot;, :] = desc.loc[&quot;mean&quot;, &quot;A&quot;]</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s2">:</span><span class="s3">, </span><span class="s5">&quot;mean&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s1">desc</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">&quot;mean&quot;</span><span class="s3">, </span><span class="s5">&quot;A&quot;</span><span class="s3">]</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+</span><span class="s1">df4 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+<span class="s1">df4 </span><span class="s2">= </span><span class="s1">df4</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">0</span><span class="s2">:-</span><span class="s4">1</span><span class="s3">, </span><span class="s2">:</span><span class="s3">]</span>
+<span class="s1">df4</span>
+<span class="s0">#%% 
+</span><span class="s1">np</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">(</span><span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s4">0</span><span class="s3">, </span><span class="s4">0</span><span class="s2">:</span><span class="s4">4</span><span class="s3">])</span>
+
+<span class="s0">#%% 
+</span><span class="s1">len</span><span class="s3">(</span><span class="s1">df</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df </span><span class="s2">= </span><span class="s1">df4</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span>
+
+<span class="s0">#%% md 
+</span><span class="s1"># Assignment 
+Add a column to the existing DataFrame containing the &quot;mean&quot; value of the data in each row from &quot;ABCD&quot; columns 
+</span><span class="s0">#%% 
+# setting mean by using a loop.</span>
+
+<span class="s0"># first run a loop of length of DataFrame</span>
+<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s1">len</span><span class="s3">(</span><span class="s1">df</span><span class="s3">)</span><span class="s2">+</span><span class="s4">1</span><span class="s3">)</span><span class="s2">:</span>
+
+    <span class="s0"># Calculate the required mean</span>
+    <span class="s1">required_mean </span><span class="s2">= </span><span class="s1">np</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">(</span><span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s1">i</span><span class="s2">-</span><span class="s4">1</span><span class="s3">, </span><span class="s4">0</span><span class="s2">:</span><span class="s4">4</span><span class="s3">])</span>
+
+    <span class="s0"># find the index of the mean column in the dataframe</span>
+    <span class="s1">mean_index </span><span class="s2">= </span><span class="s1">list</span><span class="s3">(</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns</span><span class="s3">).</span><span class="s1">index</span><span class="s3">(</span><span class="s5">&quot;mean&quot;</span><span class="s3">)</span>
+
+    <span class="s0"># set the calculated mean to the correct location</span>
+    <span class="s1">df</span><span class="s3">.</span><span class="s1">iloc</span><span class="s3">[</span><span class="s1">i</span><span class="s2">-</span><span class="s4">1</span><span class="s3">,</span><span class="s1">mean_index</span><span class="s3">] </span><span class="s2">= </span><span class="s1">required_mean</span>
+
+    <span class="s0"># end of loop</span>
+
+<span class="s0"># finding index of mean</span>
+<span class="s0"># list(df.columns).index(&quot;mean&quot;)</span>
+<span class="s1">df</span>
+<span class="s0">#%% 
+# A where operation with setting:</span>
+<span class="s1">df5 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+<span class="s1">df5</span><span class="s3">[</span><span class="s1">df5 </span><span class="s2">&gt; </span><span class="s4">100</span><span class="s3">] </span><span class="s2">= -</span><span class="s1">df5</span>
+<span class="s1">df5</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Missing data 
+pandas primarily uses the value np.nan to represent missing data. It is by default not included in computations. See the [Missing Data](https://pandas.pydata.org/docs/user_guide/missing_data.html#missing-data) section. 
+</span><span class="s0">#%% 
+# Reindexing allows you to change/add/delete the index on a specified axis. This returns a copy of the data:</span>
+<span class="s1">dates</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df1 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">reindex</span><span class="s3">(</span><span class="s1">index</span><span class="s2">=</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s2">:</span><span class="s4">4</span><span class="s3">], </span><span class="s1">columns</span><span class="s2">=</span><span class="s1">list</span><span class="s3">(</span><span class="s1">df</span><span class="s3">.</span><span class="s1">columns</span><span class="s3">) </span><span class="s2">+ </span><span class="s3">[</span><span class="s5">&quot;F&quot;</span><span class="s3">])</span>
+<span class="s1">df1</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df1</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s3">]</span><span class="s2">: </span><span class="s1">dates</span><span class="s3">[</span><span class="s4">1</span><span class="s3">], </span><span class="s5">&quot;F&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s4">1</span>
+<span class="s1">df1</span>
+
+<span class="s0">#%% 
+# DataFrame.dropna() drops any rows that have missing data:</span>
+<span class="s1">df1</span><span class="s3">.</span><span class="s1">dropna</span><span class="s3">(</span><span class="s1">how</span><span class="s2">=</span><span class="s5">&quot;any&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df1</span><span class="s3">.</span><span class="s1">dropna</span><span class="s3">(</span><span class="s1">how</span><span class="s2">=</span><span class="s5">&quot;all&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+# DataFrame.fillna() fills missing data:</span>
+<span class="s1">df1</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">().</span><span class="s1">fillna</span><span class="s3">(</span><span class="s1">value</span><span class="s2">=</span><span class="s4">5</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">df1</span>
+
+<span class="s0">#%% 
+# isna() gets the boolean mask where values are nan:</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">isna</span><span class="s3">(</span><span class="s1">df1</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Operations 
+See the [Basic section on Binary Ops](https://pandas.pydata.org/docs/user_guide/basics.html#basics-binop). 
+</span><span class="s0">#%% md 
+</span><span class="s1">## Stats 
+Operations in general exclude missing data. 
+ 
+</span><span class="s0">#%% 
+# Performing a descriptive statistic:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">()</span>
+<span class="s0">#%% 
+# Same operation on the other axis:</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">(</span><span class="s1">axis</span><span class="s2">=</span><span class="s4">1</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df </span><span class="s2">= </span><span class="s1">original_data</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">(</span><span class="s1">axis</span><span class="s2">=</span><span class="s4">1</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+# Great, a simple way to assign mean to the whole data frame</span>
+<span class="s1">df</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s2">:</span><span class="s3">, </span><span class="s5">&quot;mean&quot;</span><span class="s3">] </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">mean</span><span class="s3">(</span><span class="s1">axis</span><span class="s2">=</span><span class="s4">1</span><span class="s3">)</span>
+<span class="s1">df</span>
+
+<span class="s0">#%% 
+# Operating with objects that have different dimensionality and need alignment. In addition, pandas automatically broadcasts along the specified dimension:</span>
+<span class="s1">s1 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">([</span><span class="s4">1</span><span class="s3">,</span><span class="s4">3</span><span class="s3">,</span><span class="s4">5</span><span class="s3">,</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">, </span><span class="s4">6</span><span class="s3">,</span><span class="s4">8</span><span class="s3">], </span><span class="s1">index</span><span class="s2">=</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s2">:</span><span class="s4">6</span><span class="s3">]).</span><span class="s1">shift</span><span class="s3">(</span><span class="s4">2</span><span class="s3">)</span>
+<span class="s1">s1</span>
+
+<span class="s0">#%% 
+</span><span class="s1">s2 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">([</span><span class="s4">1</span><span class="s3">,</span><span class="s4">3</span><span class="s3">,</span><span class="s4">5</span><span class="s3">,</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">, </span><span class="s4">6</span><span class="s3">,</span><span class="s4">8</span><span class="s3">], </span><span class="s1">index</span><span class="s2">=</span><span class="s1">dates</span><span class="s3">[</span><span class="s4">0</span><span class="s2">:</span><span class="s4">6</span><span class="s3">]).</span><span class="s1">shift</span><span class="s3">(</span><span class="s1">periods</span><span class="s2">=</span><span class="s4">2</span><span class="s3">, </span><span class="s1">fill_value</span><span class="s2">=</span><span class="s4">55</span><span class="s3">)</span>
+<span class="s1">s2</span>
+<span class="s0">#%% 
+</span><span class="s1">df</span><span class="s3">.</span><span class="s1">sub</span><span class="s3">(</span><span class="s1">s1</span><span class="s3">, </span><span class="s1">axis</span><span class="s2">=</span><span class="s5">&quot;index&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Apply 
+`DataFrame.apply()` applies a user defined function to the data: 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">test_data </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+<span class="s1">test_data</span><span class="s3">.</span><span class="s1">apply</span><span class="s3">(</span><span class="s1">np</span><span class="s3">.</span><span class="s1">cumsum</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">test_data </span><span class="s2">= </span><span class="s1">df</span><span class="s3">.</span><span class="s1">copy</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">test_data</span><span class="s3">.</span><span class="s1">apply</span><span class="s3">(</span><span class="s2">lambda </span><span class="s1">x</span><span class="s2">: </span><span class="s1">x</span><span class="s3">.</span><span class="s1">max</span><span class="s3">() </span><span class="s2">- </span><span class="s1">x</span><span class="s3">.</span><span class="s1">min</span><span class="s3">())</span>
+
+<span class="s0">#%% 
+</span><span class="s1">test_data</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Histogramming 
+See more at [Histogramming and Discretization](https://pandas.pydata.org/docs/user_guide/basics.html#basics-discretization). 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">s </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">(</span><span class="s1">np</span><span class="s3">.</span><span class="s1">random</span><span class="s3">.</span><span class="s1">randint</span><span class="s3">(</span><span class="s4">0</span><span class="s3">, </span><span class="s4">7</span><span class="s3">, </span><span class="s1">size</span><span class="s2">=</span><span class="s4">10</span><span class="s3">))</span>
+<span class="s1">s</span>
+
+<span class="s0">#%% 
+</span><span class="s1">s</span><span class="s3">.</span><span class="s1">value_counts</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## String Methods 
+Series is equipped with a set of string processing methods in the str attribute that make it easy to operate on each element of the array, as in the code snippet below. Note that pattern-matching in `str` generally uses [regular expressions](https://docs.python.org/3/library/re.html) by default (and in some cases always uses them). See more at [Vectorized String Methods](https://pandas.pydata.org/docs/user_guide/text.html#text-string-methods). 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">s </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">([</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">, </span><span class="s5">&quot;C&quot;</span><span class="s3">, </span><span class="s5">&quot;Aaba&quot;</span><span class="s3">, </span><span class="s5">&quot;Baca&quot;</span><span class="s3">, </span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">, </span><span class="s5">&quot;CABA&quot;</span><span class="s3">, </span><span class="s5">&quot;dog&quot;</span><span class="s3">, </span><span class="s5">&quot;cat&quot;</span><span class="s3">])</span>
+<span class="s1">s</span><span class="s3">.</span><span class="s1">str</span><span class="s3">.</span><span class="s1">lower</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+</span><span class="s1">print</span><span class="s3">(</span><span class="s1">s</span><span class="s3">.</span><span class="s1">str</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Merge 
+</span><span class="s0">#%% md 
+</span><span class="s1">## concat 
+ 
+pandas provides various facilities for easily combining together Series and DataFrame objects with various kinds of set logic for the indexes and relational algebra functionality in the case of join / merge-type operations. 
+ 
+See the [Merging section](https://pandas.pydata.org/docs/user_guide/merging.html#merging). 
+ 
+Concatenating pandas objects together along an axis with [concat()](https://pandas.pydata.org/docs/reference/api/pandas.concat.html#pandas.concat): 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">df </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span><span class="s1">np</span><span class="s3">.</span><span class="s1">random</span><span class="s3">.</span><span class="s1">randn</span><span class="s3">(</span><span class="s4">10</span><span class="s3">, </span><span class="s4">4</span><span class="s3">))</span>
+<span class="s1">df</span>
+
+<span class="s0">#%% 
+# break it into pieces</span>
+<span class="s1">pieces </span><span class="s2">= </span><span class="s3">[</span><span class="s1">df</span><span class="s3">[</span><span class="s2">:</span><span class="s4">3</span><span class="s3">], </span><span class="s1">df</span><span class="s3">[</span><span class="s4">3</span><span class="s2">:</span><span class="s4">7</span><span class="s3">], </span><span class="s1">df</span><span class="s3">[</span><span class="s4">7</span><span class="s2">:</span><span class="s3">]]</span>
+<span class="s1">pieces</span>
+
+<span class="s0">#%% 
+</span><span class="s1">type</span><span class="s3">(</span><span class="s1">pieces</span><span class="s3">)</span>
+
+<span class="s0">#%% 
+</span><span class="s1">pieces</span><span class="s3">[</span><span class="s4">0</span><span class="s3">]</span>
+
+<span class="s0">#%% 
+</span><span class="s1">pd</span><span class="s3">.</span><span class="s1">concat</span><span class="s3">(</span><span class="s1">pieces</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">#### Note 
+Adding a column to a DataFrame is relatively fast. However, adding a row requires a copy, and may be expensive. We recommend passing a pre-built list of records to the DataFrame constructor instead of building a DataFrame by iteratively appending records to it. 
+ 
+</span><span class="s0">#%% md 
+</span><span class="s1">## Join 
+[`merge()`](https://pandas.pydata.org/docs/reference/api/pandas.merge.html#pandas.merge) enables SQL style join types along specific columns. See the [Database style joining section](https://pandas.pydata.org/docs/user_guide/merging.html#merging-join). 
+</span><span class="s0">#%% 
+</span><span class="s1">left </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;city&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;faisalabad&quot;</span><span class="s3">, </span><span class="s5">&quot;lahore&quot;</span><span class="s3">, </span><span class="s5">&quot;sialkot&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;temperature&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">7</span><span class="s3">, </span><span class="s4">5</span><span class="s3">, </span><span class="s4">9</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">right </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;city&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;faisalabad&quot;</span><span class="s3">, </span><span class="s5">&quot;lahore&quot;</span><span class="s3">, </span><span class="s5">&quot;islamabad&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;humidity&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">30</span><span class="s3">, </span><span class="s4">25</span><span class="s3">, </span><span class="s4">20</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">left</span><span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">right</span><span class="s3">)</span>
+
+<span class="s0"># pd.merge(left, right, on=&quot;key&quot;)</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">merge</span><span class="s3">(</span><span class="s1">left</span><span class="s2">=</span><span class="s1">left</span><span class="s3">, </span><span class="s1">right</span><span class="s2">=</span><span class="s1">right</span><span class="s3">, </span><span class="s1">how</span><span class="s2">=</span><span class="s5">&quot;cross&quot;</span><span class="s3">)</span>
+<span class="s0"># how=joint name;</span>
+<span class="s0"># how{‘left’, ‘right’, ‘outer’, ‘inner’, ‘cross’}, default ‘inner’</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Cross Join 
+![](../../../images/cross_join.png) 
+</span><span class="s0">#%% 
+</span><span class="s1">left </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;city&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;faisalabad&quot;</span><span class="s3">, </span><span class="s5">&quot;lahore&quot;</span><span class="s3">, </span><span class="s5">&quot;sialkot&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;temperature&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">7</span><span class="s3">, </span><span class="s4">5</span><span class="s3">, </span><span class="s4">9</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">right </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;city&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;faisalabad&quot;</span><span class="s3">, </span><span class="s5">&quot;lahore&quot;</span><span class="s3">, </span><span class="s5">&quot;islamabad&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;humidity&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">30</span><span class="s3">, </span><span class="s4">25</span><span class="s3">, </span><span class="s4">20</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">left</span><span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">right</span><span class="s3">)</span>
+
+<span class="s0"># pd.merge(left, right, on=&quot;key&quot;)</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">merge</span><span class="s3">(</span><span class="s1">left</span><span class="s2">=</span><span class="s1">left</span><span class="s3">, </span><span class="s1">right</span><span class="s2">=</span><span class="s1">right</span><span class="s3">, </span><span class="s1">on</span><span class="s2">=</span><span class="s5">&quot;city&quot;</span><span class="s3">, </span><span class="s1">how</span><span class="s2">=</span><span class="s5">&quot;outer&quot;</span><span class="s3">).</span><span class="s1">sort_values</span><span class="s3">(</span><span class="s1">by</span><span class="s2">=</span><span class="s5">&quot;city&quot;</span><span class="s3">, </span><span class="s1">ascending</span><span class="s2">=True</span><span class="s3">)</span>
+<span class="s0"># how=joint name;</span>
+<span class="s0"># how{‘left’, ‘right’, ‘outer’, ‘inner’, ‘cross’}, default ‘inner’</span>
+
+<span class="s0">#%% 
+</span><span class="s1">left </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;key&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;lval&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">1</span><span class="s3">, </span><span class="s4">2</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">right </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;key&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;rval&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s4">4</span><span class="s3">, </span><span class="s4">5</span><span class="s3">]</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">left</span><span class="s3">)</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">right</span><span class="s3">)</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">merge</span><span class="s3">(</span><span class="s1">left</span><span class="s3">, </span><span class="s1">right</span><span class="s3">, </span><span class="s1">on</span><span class="s2">=</span><span class="s5">&quot;key&quot;</span><span class="s3">)</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Grouping 
+By “group by” we are referring to a process involving one or more of the following steps: 
+ 
+&gt; - Splitting the data into groups based on some criteria 
+&gt; - Applying a function to each group independently 
+&gt; - Combining the results into a data structure 
+ 
+See the [Grouping section](https://pandas.pydata.org/docs/user_guide/groupby.html#groupby). 
+</span><span class="s0">#%% 
+</span><span class="s1">df2 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;A&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;B&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;three&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;three&quot;</span><span class="s3">],</span>
+        <span class="s5">&quot;C&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">,</span><span class="s4">9</span><span class="s3">),</span>
+        <span class="s5">&quot;D&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">9</span><span class="s3">, </span><span class="s4">17</span><span class="s3">),</span>
+        <span class="s5">&quot;E&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">17</span><span class="s3">,</span><span class="s4">25</span><span class="s3">)</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">df2</span>
+
+<span class="s0">#%% 
+# Grouping and then applying the sum() function to the resulting groups:</span>
+<span class="s1">df2</span><span class="s3">.</span><span class="s1">groupby</span><span class="s3">(</span><span class="s5">&quot;A&quot;</span><span class="s3">)[[</span><span class="s5">&quot;C&quot;</span><span class="s3">, </span><span class="s5">&quot;D&quot;</span><span class="s3">]].</span><span class="s1">sum</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+# Grouping by multiple columns forms a hierarchical index, and again we can apply the sum() function:</span>
+<span class="s1">df2</span><span class="s3">.</span><span class="s1">groupby</span><span class="s3">([</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">]).</span><span class="s1">sum</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Reshaping 
+See the sections on [Hierarchical Indexing](https://pandas.pydata.org/docs/user_guide/advanced.html#advanced-hierarchical) and [Reshaping](https://pandas.pydata.org/docs/user_guide/reshaping.html#reshaping-stacking). 
+</span><span class="s0">#%% md 
+</span><span class="s1">## Stack 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">tuples </span><span class="s2">= </span><span class="s1">list</span><span class="s3">(</span>
+    <span class="s1">zip</span><span class="s3">(</span>
+        <span class="s3">[</span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;baz&quot;</span><span class="s3">, </span><span class="s5">&quot;baz&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;qux&quot;</span><span class="s3">, </span><span class="s5">&quot;qux&quot;</span><span class="s3">],</span>
+        <span class="s3">[</span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">],</span>
+    <span class="s3">)</span>
+<span class="s3">)</span>
+<span class="s1">index </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">MultiIndex</span><span class="s3">.</span><span class="s1">from_tuples</span><span class="s3">(</span><span class="s1">tuples</span><span class="s3">, </span><span class="s1">names</span><span class="s2">=</span><span class="s3">[</span><span class="s5">&quot;first&quot;</span><span class="s3">, </span><span class="s5">&quot;second&quot;</span><span class="s3">])</span>
+<span class="s1">print</span><span class="s3">(</span><span class="s1">index</span><span class="s3">)</span>
+
+<span class="s1">df </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">, </span><span class="s4">17</span><span class="s3">).</span><span class="s1">reshape</span><span class="s3">(</span><span class="s4">8</span><span class="s3">,</span><span class="s4">2</span><span class="s3">), </span><span class="s1">index</span><span class="s2">=</span><span class="s1">index</span><span class="s3">, </span><span class="s1">columns</span><span class="s2">=</span><span class="s3">[</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">])</span>
+<span class="s1">df3 </span><span class="s2">= </span><span class="s1">df</span><span class="s3">[</span><span class="s2">:</span><span class="s4">4</span><span class="s3">]</span>
+<span class="s1">df3</span>
+
+<span class="s0">#%% 
+# The stack() method “compresses” a level in the DataFrame’s columns:</span>
+<span class="s1">stacked </span><span class="s2">= </span><span class="s1">df3</span><span class="s3">.</span><span class="s1">stack</span><span class="s3">()</span>
+<span class="s1">stacked</span>
+
+<span class="s0">#%% 
+</span><span class="s1">stacked</span><span class="s3">.</span><span class="s1">unstack</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Pivot tables 
+See the section on [Pivot Tables](https://pandas.pydata.org/docs/user_guide/reshaping.html#reshaping-pivot). 
+</span><span class="s0">#%% 
+</span><span class="s1">df2 </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">DataFrame</span><span class="s3">(</span>
+    <span class="s3">{</span>
+        <span class="s5">&quot;A&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;one&quot;</span><span class="s3">, </span><span class="s5">&quot;two&quot;</span><span class="s3">, </span><span class="s5">&quot;three&quot;</span><span class="s3">] </span><span class="s2">* </span><span class="s4">3</span><span class="s3">,</span>
+        <span class="s5">&quot;B&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">, </span><span class="s5">&quot;C&quot;</span><span class="s3">] </span><span class="s2">* </span><span class="s4">4</span><span class="s3">,</span>
+        <span class="s5">&quot;C&quot;</span><span class="s2">: </span><span class="s3">[</span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;foo&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">, </span><span class="s5">&quot;bar&quot;</span><span class="s3">] </span><span class="s2">* </span><span class="s4">2</span><span class="s3">,</span>
+        <span class="s5">&quot;D&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">,</span><span class="s4">13</span><span class="s3">),</span>
+        <span class="s5">&quot;E&quot;</span><span class="s2">: </span><span class="s1">np</span><span class="s3">.</span><span class="s1">arange</span><span class="s3">(</span><span class="s4">1</span><span class="s3">,</span><span class="s4">13</span><span class="s3">),</span>
+    <span class="s3">}</span>
+<span class="s3">)</span>
+<span class="s1">df2</span>
+
+<span class="s0">#%% 
+# todo:: check what is pivot table?</span>
+<span class="s1">pd</span><span class="s3">.</span><span class="s1">pivot_table</span><span class="s3">(</span><span class="s1">df2</span><span class="s3">, </span><span class="s1">values</span><span class="s2">=</span><span class="s5">&quot;D&quot;</span><span class="s3">, </span><span class="s1">index</span><span class="s2">=</span><span class="s3">[</span><span class="s5">&quot;A&quot;</span><span class="s3">, </span><span class="s5">&quot;B&quot;</span><span class="s3">], </span><span class="s1">columns</span><span class="s2">=</span><span class="s3">[</span><span class="s5">&quot;C&quot;</span><span class="s3">])</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">## Time series 
+pandas has simple, powerful, and efficient functionality for performing resampling operations during frequency conversion (e.g., converting secondly data into 5-minutely data). This is extremely common in, but not limited to, financial applications. See the [Time Series section](https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries). 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">rng </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">date_range</span><span class="s3">(</span><span class="s5">&quot;1/1/2023&quot;</span><span class="s3">, </span><span class="s1">periods</span><span class="s2">=</span><span class="s4">100</span><span class="s3">, </span><span class="s1">freq</span><span class="s2">=</span><span class="s5">&quot;S&quot;</span><span class="s3">)</span>
+<span class="s1">rng</span>
+<span class="s0">#%% 
+</span><span class="s1">ts </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">(</span><span class="s1">np</span><span class="s3">.</span><span class="s1">random</span><span class="s3">.</span><span class="s1">randint</span><span class="s3">(</span><span class="s4">0</span><span class="s3">, </span><span class="s4">500</span><span class="s3">, </span><span class="s1">len</span><span class="s3">(</span><span class="s1">rng</span><span class="s3">)), </span><span class="s1">index</span><span class="s2">=</span><span class="s1">rng</span><span class="s3">)</span>
+<span class="s1">ts</span>
+<span class="s0">#%% 
+</span><span class="s1">ts</span><span class="s3">.</span><span class="s1">resample</span><span class="s3">(</span><span class="s5">&quot;30S&quot;</span><span class="s3">).</span><span class="s1">sum</span><span class="s3">()</span>
+
+<span class="s0">#%% 
+# Series.tz_localize() localizes a time series to a time zone:</span>
+<span class="s1">rng </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">date_range</span><span class="s3">(</span><span class="s5">&quot;3/6/2023 00:00&quot;</span><span class="s3">, </span><span class="s1">periods</span><span class="s2">=</span><span class="s4">5</span><span class="s3">, </span><span class="s1">freq</span><span class="s2">=</span><span class="s5">&quot;D&quot;</span><span class="s3">)</span>
+<span class="s1">ts </span><span class="s2">= </span><span class="s1">pd</span><span class="s3">.</span><span class="s1">Series</span><span class="s3">( </span><span class="s1">np</span><span class="s3">.</span><span class="s1">random</span><span class="s3">.</span><span class="s1">randint</span><span class="s3">(</span><span class="s4">0</span><span class="s3">, </span><span class="s4">100</span><span class="s3">, </span><span class="s1">len</span><span class="s3">(</span><span class="s1">rng</span><span class="s3">)), </span><span class="s1">index</span><span class="s2">=</span><span class="s1">rng </span><span class="s3">)</span>
+<span class="s1">ts</span>
+
+<span class="s0">#%% 
+</span><span class="s2">import </span><span class="s1">pytz</span>
+<span class="s1">pytz</span><span class="s3">.</span><span class="s1">all_timezones</span>
+<span class="s0">#%% 
+</span><span class="s1">ts_utc </span><span class="s2">= </span><span class="s1">ts</span><span class="s3">.</span><span class="s1">tz_localize</span><span class="s3">(</span><span class="s1">pytz</span><span class="s3">.</span><span class="s1">timezone</span><span class="s3">(</span><span class="s5">'Asia/Tashkent'</span><span class="s3">))</span>
+<span class="s1">ts_utc</span>
+<span class="s0">#%% 
+</span></pre>
+</body>
+</html>
